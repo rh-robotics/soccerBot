@@ -8,7 +8,7 @@ import java.util.EnumSet;
 public class SoccerStateMachineFactory {
 
     public enum State  { INIT, MAIN, PENALTY, DRIBBLE, KICK, BLOCK, DONE }
-    public enum Event  { START, FINISH, ENCROACH, RETREAT,RECEIVE,AIM,DEFEND,TRANSITION,KICKED }
+    public enum Event  { START, FINISH, ENCROACH, RETREAT,RECEIVE,AIM,DEFEND,TRANSITION,KICKED,STOLEN }
 
     public static StateMachine<State, Event> build() throws Exception {
 
@@ -47,6 +47,9 @@ public class SoccerStateMachineFactory {
                 .and()
                 .withExternal()
                 .source(State.BLOCK).target(State.MAIN).event(Event.TRANSITION)
+                .and()
+                .withExternal()
+                .source(State.DRIBBLE).target(State.MAIN).event(Event.STOLEN)
                 .and()
                 .withExternal()
                 .source(State.KICK).target(State.MAIN).event(Event.KICKED);
